@@ -27,7 +27,8 @@ export default function Home() {
     const index = "1";
     const response = await axios({
       method: "post",
-      url: `http://localhost:8000/api/upload/approval/${index}`,
+      url: `https://crescenthook.net/api/upload/document/${index}`,
+      // url: `http://localhost:8000/api/upload/document/${index}`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data", Accept: "application/json" },
     }).catch((error) => {
