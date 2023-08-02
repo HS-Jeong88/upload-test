@@ -1,26 +1,31 @@
 "use client";
 
 import axios from "axios";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState([]);
+  const [images, setImages] = useState([]);
+  const [preview, setPreview] = useState([]);
   const inputRef = useRef(null);
   useEffect(() => {
-    console.log(inputRef.current?.files);
-    const newArr = [];
-    for (const items of inputRef.current.files) {
-      newArr.push(items);
-    }
+    const newArr = Array.from(inputRef.current?.files).map((file) => {
+      return file;
+    });
+    const thumbnailTarget = Array.from(inputRef.current?.files).map((file) => {
+      return URL.createObjectURL(file);
+    });
+    setPreview((prev) => [...prev, ...thumbnailTarget]);
     setInputValue(newArr);
-  }, [inputRef.current?.files]);
+  }, [inputRef.current?.files, setPreview]);
 
   const onsubmit = async (e) => {
     e.preventDefault();
-    const targetData = inputRef.current.files;
+    const targetData = inputRef.current?.files;
     if (targetData.length === 0) return alert("파일을 선택해주세요.");
     const formData = new FormData();
-    for (const item of inputRef.current.files) {
+    for (const item of inputRef.current?.files) {
       formData.append("files", item);
     }
     formData.append("data", "1");
@@ -44,14 +49,18 @@ export default function Home() {
         <button
           className="bg-gray-200 rounded-lg px-5 py-1 hover:bg-gray-300 active:scale-[0.98]"
           onClick={() => {
+            setPreview([]);
             document.getElementById("files").click();
           }}
         >
           Upload
         </button>
         <div className="h-full">
-          {inputValue?.map((file) => (
+          {inputValue?.map((file, index) => (
             <div key={file.name} className="flex flex-col">
+              <div className="w-52 h-52 flex relative">
+                <Image src={preview[index]} fill alt="" />
+              </div>
               <p className="truncate" title={file.name}>
                 {file.name}
               </p>
