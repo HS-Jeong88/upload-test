@@ -30,10 +30,11 @@ export default function Home() {
     }
     formData.append("data", "1");
     const index = "1";
+    const id = "apz1031";
     const response = await axios({
       method: "post",
-      url: `https://crescenthook.net/api/upload/document/${index}`,
-      // url: `http://localhost:8000/api/upload/document/${index}`,
+      // url: `https://crescenthook.net/api/upload/account/${id}`,
+      url: `http://localhost:8000/api/upload/account/${id}`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data", Accept: "application/json" },
     }).catch((error) => {
@@ -73,6 +74,14 @@ export default function Home() {
         >
           Submit
         </button>
+      </div>
+      <div className="w-[500px] h-[500px] relative">
+        <Image
+          src="https://crescenthook.net/api/uploads/document/1/david-becker-ea4FS8zIsqE-unsplash.jpg"
+          alt=""
+          fill
+          unoptimized={true}
+        />
       </div>
     </main>
   );
