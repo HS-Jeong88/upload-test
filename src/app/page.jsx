@@ -18,7 +18,7 @@ export default function Home() {
     });
     setPreview((prev) => [...prev, ...thumbnailTarget]);
     setInputValue(newArr);
-  }, [inputRef.current?.files, setPreview]);
+  }, [inputRef.current?.files, preview]);
 
   const onsubmit = async (e) => {
     e.preventDefault();
@@ -33,8 +33,8 @@ export default function Home() {
     const id = "apz1031";
     const response = await axios({
       method: "post",
-      // url: `https://crescenthook.net/api/upload/account/${id}`,
-      url: `http://localhost:8000/api/upload/account/${id}`,
+      url: `https://crescenthook.net/api/upload/account/${id}`,
+      // url: `http://localhost:8000/api/upload/account/${id}`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data", Accept: "application/json" },
     }).catch((error) => {
@@ -56,18 +56,7 @@ export default function Home() {
         >
           Upload
         </button>
-        <div className="h-full">
-          {inputValue?.map((file, index) => (
-            <div key={file.name} className="flex flex-col">
-              <div className="w-52 h-52 flex relative">
-                <Image src={preview[index]} fill alt="" />
-              </div>
-              <p className="truncate" title={file.name}>
-                {file.name}
-              </p>
-            </div>
-          ))}
-        </div>
+        <div className="h-full"></div>
         <button
           className="bg-gray-200 rounded-lg px-5 py-1 hover:bg-gray-300 active:scale-[0.98]"
           onClick={onsubmit}
@@ -75,13 +64,17 @@ export default function Home() {
           Submit
         </button>
       </div>
-      <div className="w-[500px] h-[500px] relative">
-        <Image
-          src="https://crescenthook.net/api/uploads/document/1/david-becker-ea4FS8zIsqE-unsplash.jpg"
-          alt=""
-          fill
-          unoptimized={true}
-        />
+      <div className="">
+        {inputValue?.map((file, index) => (
+          <div key={file.name} className="flex flex-col">
+            <div className="w-52 h-52 flex relative">
+              <Image src={preview[index]} fill alt="" />
+            </div>
+            <p className="truncate" title={file.name}>
+              {file.name}
+            </p>
+          </div>
+        ))}
       </div>
     </main>
   );
