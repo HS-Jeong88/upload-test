@@ -24,20 +24,20 @@ export default function Test() {
           target.firstChild.classList.remove("hidden");
         } else {
           target.style.height = "80%";
-          target.style.zIndex = "10";
           target.style.transform = "translate(-36%,0)";
           target.style.transition = "all 0.5s cubic-bezier(0.3, 0.6, 0.5, 1)";
-          set;
-          target.style.width = "40%";
+          setTimeout(() => {
+            target.style.width = "40%";
+          }, 500);
         }
       }
     }
   }, [data, isRearrange]);
 
   const rearrange = (e) => {
-    e.target.classList.add("hidden");
+    e.target.parentNode.classList.add("hidden");
     setIsRearrange(true);
-    const mainTarget = e.target.parentNode;
+    const mainTarget = e.target.parentNode.parentNode;
 
     let newData = data.filter((item) => item.id === mainTarget.id);
     let subData = data.filter((item) => item.id !== mainTarget.id);
@@ -66,17 +66,19 @@ export default function Test() {
                 : "translate-x-[120%]"
             } origin-top-left bg-[${
               item.color
-            }] w-[20%] h-[80%] flex justify-center items-end py-[1rem] rounded-md shadow-[4px_4px_10px_0px_rgba(0,0,0,0.3)]`}
+            }] w-[20%] h-[80%] flex justify-center items-end rounded-md shadow-[4px_4px_10px_0px_rgba(0,0,0,0.3)]`}
           >
-            <button
-              className={`w-[5rem] h-[2rem] bg-[#aaaaaa] rounded-md shadow-[2px_2px_10px_0px_rgba(0,0,0,0.3)]`}
-              onClick={(e) => {
-                e.preventDefault();
-                rearrange(e);
-              }}
-            >
-              Click
-            </button>
+            <div className="absolute left-0 top-0 flex justify-center items-end py-[1rem] w-full h-full bg-opacity-50 bg-black rounded-md">
+              <button
+                className={`w-[5rem] h-[2rem] bg-[#eeeeee] rounded-md shadow-[2px_2px_10px_0px_rgba(0,0,0,0.3)]`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  rearrange(e);
+                }}
+              >
+                Click
+              </button>
+            </div>
           </div>
         ))}
       </div>
