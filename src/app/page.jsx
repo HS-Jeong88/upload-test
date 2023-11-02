@@ -14,11 +14,11 @@ export default function Home() {
       return file;
     });
     const thumbnailTarget = Array.from(inputRef.current?.files).map((file) => {
-      return URL.createObjectURL(file);
+      URL.createObjectURL(file);
     });
     setPreview((prev) => [...prev, ...thumbnailTarget]);
     setInputValue(newArr);
-  }, [inputRef.current?.files, preview]);
+  }, [inputRef.current?.files]);
 
   const onsubmit = async (e) => {
     e.preventDefault();
@@ -29,23 +29,21 @@ export default function Home() {
       formData.append("files", item);
     }
     formData.append("data", "1");
-    const index = "1";
-    const id = "apz1031";
     const response = await axios({
       method: "post",
-      url: `https://crescenthook.net/api/upload/account/${id}`,
-      // url: `http://localhost:8000/api/upload/account/${id}`,
+      url: `http://118.67.131.205/api/upload/1`,
+      // url: `http://localhost:4000/api/upload/1`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data", Accept: "application/json" },
     }).catch((error) => {
       console.log(error);
     });
-    console.log(response.data);
+    console.log(response?.data);
   };
 
   return (
-    <main className="flex justify-center items-center w-full h-full">
-      <div className="flex flex-col bg-slate-400 w-[400px] h-[400px] rounded-xl p-5 gap-3 overflow-hidden">
+    <main className="flex flex-col justify-center items-center w-full h-full">
+      <div className="flex flex-col bg-slate-400 w-[400px] h-fit rounded-xl p-5 gap-3 overflow-hidden">
         <input type="file" name="files" id="files" multiple className="hidden" ref={inputRef} />
         <button
           className="bg-gray-200 rounded-lg px-5 py-1 hover:bg-gray-300 active:scale-[0.98]"
@@ -56,7 +54,6 @@ export default function Home() {
         >
           Upload
         </button>
-        <div className="h-full"></div>
         <button
           className="bg-gray-200 rounded-lg px-5 py-1 hover:bg-gray-300 active:scale-[0.98]"
           onClick={onsubmit}
@@ -64,7 +61,7 @@ export default function Home() {
           Submit
         </button>
       </div>
-      <div className="">
+      <div className="mt-4 flex flex-col">
         {inputValue?.map((file, index) => (
           <div key={file.name} className="flex flex-col">
             <div className="w-52 h-52 flex relative">
