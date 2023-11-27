@@ -31,8 +31,10 @@ export default function Home() {
     formData.append("data", "1");
     const response = await axios({
       method: "post",
-      url: `http://118.67.131.205/api/upload/1`,
+      // url: `http://118.67.131.205/api/upload/1`,
       // url: `http://localhost:4000/api/upload/1`,
+      url: `http://localhost:4444/api/file`,
+      // url: `http://139.150.83.134/api/file`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data", Accept: "application/json" },
     }).catch((error) => {
